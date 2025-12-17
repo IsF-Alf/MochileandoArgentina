@@ -124,7 +124,7 @@ pip install -r requirements.txt
 Copiar el archivo `.env.example` y renombrarlo a `.env`, luego completar los valores necesarios:
 
 ```env
-SECRET_KEY=tu_clave_secreta
+SECRET_KEY=django-insecure-n)jqf&-%1u0rv&@5q2*%3^6n!-gal@z6dcn@ntb8)y(&)n$
 DEBUG=True
 ```
 
@@ -199,3 +199,4 @@ Pasos sugeridos:
 Proyecto de uso educativo y demostrativo.
 
 ⭐ Si este proyecto te resulta interesante o útil, no dudes en darle una estrella al repositorio.
+
