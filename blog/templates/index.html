@@ -1,82 +1,747 @@
 {% extends 'layouts/general-layout.html' %}
 {% load static %}
-{% block title %}Inicio{% endblock title %}
+{% block title %}Inicio - Mochileando Argentina{% endblock title %}
+
+{% block extra_head %}
+<style>
+  /* Animaciones personalizadas */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+  
+  /* Clases utilitarias */
+  .animate-fade-in-up {
+    animation: fadeInUp 0.8s ease-out forwards;
+  }
+  
+  .animate-fade-in {
+    animation: fadeIn 1s ease-out forwards;
+  }
+  
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+  
+  /* Estados iniciales para animaciones scroll */
+  .js-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), 
+                transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .js-scroll.scrolled {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  /* Efectos hover mejorados para desktop */
+  @media (hover: hover) and (pointer: fine) {
+    .hover-lift {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .hover-lift:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+  }
+  
+  /* Mejoras de accesibilidad */
+  .keyboard-navigation a:focus,
+  .keyboard-navigation button:focus,
+  .keyboard-navigation [tabindex]:focus {
+    outline: 3px solid rgba(59, 130, 246, 0.5);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  
+  /* Mejorar feedback táctil */
+  .touch-device button:active,
+  .touch-device a:active {
+    transform: scale(0.98);
+    transition: transform 0.1s;
+  }
+  
+  /* Optimizaciones para móvil */
+  @media (max-width: 768px) {
+    .mobile-optimized-image {
+      height: 250px;
+      object-position: center 30%;
+    }
+    
+    .mobile-text-center {
+      text-align: center;
+    }
+    
+    .mobile-padding {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+    
+    .mobile-stack {
+      flex-direction: column;
+    }
+    
+    /* Ajustes de tipografía para móvil */
+    .mobile-text-lg {
+      font-size: 1.125rem;
+      line-height: 1.6;
+    }
+    
+    .mobile-text-xl {
+      font-size: 1.25rem;
+      line-height: 1.5;
+    }
+    
+    /* Touch targets más grandes */
+    .mobile-touch-target {
+      min-height: 44px;
+      min-width: 44px;
+    }
+  }
+  
+  /* Ajustes para tablets */
+  @media (min-width: 769px) and (max-width: 1024px) {
+    .tablet-optimized {
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+  }
+  
+  /* Optimizar para reducción de movimiento */
+  @media (prefers-reduced-motion: reduce) {
+    .js-scroll,
+    .js-scroll.scrolled,
+    .hover-lift,
+    .hover-lift:hover {
+      transition: none !important;
+      transform: none !important;
+      animation: none !important;
+    }
+    
+    html {
+      scroll-behavior: auto;
+    }
+  }
+</style>
+{% endblock extra_head %}
+
 {% block banner %}
-<section class="relative w-full h-[320px] md:h-[420px] lg:h-[500px] overflow-hidden ">
-  <img src="{% static 'img/Ruta40.jpg' %}" alt="Banner principal del sitio" fetchpriority="high" loading="eager"
-    class="w-full h-full object-cover mt-3">
-  <div class="absolute inset-0 flex items-center justify-center bg-black/40">
-    <h1 class="text-white text-4xl md:text-6xl font-extrabold tracking-wide drop-shadow-xl">
-      Bienvenidos a Mochileando Argentina
-    </h1>
+<section class="relative w-full h-[85vh] min-h-[500px] max-h-[700px] overflow-hidden bg-gray-900">
+  <!-- Imagen de fondo con optimización -->
+  <div class="absolute inset-0">
+    <img 
+      src="{% static 'img/Ruta40.jpg' %}" 
+      alt="Banner principal - Ruta 40 Argentina, camino emblemático de los Andes" 
+      fetchpriority="high" 
+      loading="eager"
+      class="w-full h-full object-cover mobile-optimized-image"
+      style="object-position: center 30%;"
+    >
+    
+    <!-- Gradiente superpuesto para mejor legibilidad -->
+    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-black/30"></div>
+    <div class="absolute inset-0 bg-gradient-to-r from-black/20 to-transparent"></div>
+  </div>
+  
+  <!-- Contenido del banner -->
+  <div class="relative h-full flex items-center justify-center px-4 md:px-8">
+    <div class="text-center max-w-6xl mx-auto w-full">
+      <!-- Logo o icono flotante -->
+      <div class="mb-6 md:mb-8 flex justify-center animate-float">
+        <div class="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center border border-white/20">
+          <span class="text-white text-2xl md:text-3xl">✈️</span>
+        </div>
+      </div>
+      
+      <!-- Título principal -->
+      <h1 class="text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 md:mb-6 leading-tight tracking-tight js-scroll">
+        <span class="block">Mochileando</span>
+        <span class="block text-blue-300">Argentina</span>
+      </h1>
+      
+      <!-- Subtítulo -->
+      <p class="text-white/90 text-lg sm:text-xl md:text-2xl font-light max-w-2xl mx-auto mb-8 md:mb-12 leading-relaxed js-scroll" style="transition-delay: 0.2s;">
+        Descubrí la aventura de recorrer cada rincón, vivir cada experiencia y compartir cada camino.
+      </p>
+      
+      <!-- CTA y elementos interactivos -->
+      <div class="flex flex-col sm:flex-row gap-4 justify-center items-center js-scroll" style="transition-delay: 0.4s;">
+        <a href="#explorar" class="w-full sm:w-auto px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl text-center mobile-touch-target">
+          Comenzar Aventura
+        </a>
+        <a href="#comunidad" class="w-full sm:w-auto px-8 py-4 bg-transparent border-2 border-white/40 hover:border-white text-white font-bold rounded-xl transition-all duration-300 hover:bg-white/10 text-center mobile-touch-target">
+          Ver Comunidad
+        </a>
+      </div>
+      
+      <!-- Indicador scroll para desktop -->
+      <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 hidden md:block">
+        <div class="flex flex-col items-center">
+          <span class="text-white/60 text-sm mb-2 animate-pulse">Explorar más</span>
+          <div class="w-6 h-10 border-2 border-white/40 rounded-full flex justify-center">
+            <div class="w-1 h-3 bg-white/70 rounded-full mt-2 animate-bounce"></div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 {% endblock banner %}
+
 {% block content %}
-<!-- Encabezado -->
-<div class="text-center my-12 px-4">
-  <h2 class="text-3xl md:text-4xl font-extrabold text-brand mb-3 text-blue-600">
-    Explora, Compartí y Descubrí Argentina
-  </h2>
-  <p class="text-gray-700 max-w-3xl mx-auto text-lg">
-    Si te apasiona viajar, este es tu lugar. En Mochileando Argentina vas a encontrar experiencias auténticas,
-    recomendaciones reales, rutas alternativas, paisajes únicos y la mirada honesta de viajeros que conocen el país
-    caminando, pedaleando, recorriendo rutas o aventurándose sin un plan fijo. Inspirate, planificá y animáte a explorar
-    cada rincón de este país increíble.
-  </p>
-</div>
-<div class="max-w-7xl mx-auto px-4">
-  <!-- BLOQUE 1 -->
-  <div class="grid md:grid-cols-2 gap-10 items-center mb-16">
-    <img src="{% static 'img/CafayateSaltaIndex.jpg' %}" alt="Viajeros recorriendo Argentina"
-      class="rounded-2xl shadow-lg w-full object-cover" />
-    <div>
-      <h3 class="text-2xl font-bold text-brand mb-3 text-blue-600">Historias de Viaje</h3>
-      <p class="text-gray-600 leading-relaxed">
-        Descubrí relatos llenos de aventuras, momentos inesperados, recomendaciones útiles y aprendizajes de quienes
-        recorrieron rutas, sierras, quebradas, pueblos y ciudades de todo el país. Cada historia es una guía real creada
-        por personas que viajaron antes que vos y quieren ayudarte a planear tus próximos kilómetros.
+<!-- Sección de introducción -->
+<section id="explorar" class="py-16 md:py-24 px-4 md:px-8 bg-gradient-to-b from-white to-gray-50/50">
+  <div class="max-w-6xl mx-auto">
+    <!-- Encabezado de sección -->
+    <div class="text-center mb-16 js-scroll">
+      <div class="inline-flex items-center justify-center gap-3 mb-6">
+        <div class="w-10 h-1 bg-blue-500 rounded-full"></div>
+        <span class="text-blue-600 font-semibold tracking-wider uppercase text-sm">Bienvenidos Viajeros</span>
+        <div class="w-10 h-1 bg-blue-500 rounded-full"></div>
+      </div>
+      
+      <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
+        Explora, Compartí y <span class="text-blue-600">Descubrí</span> Argentina
+      </h2>
+      
+      <p class="text-gray-700 text-lg md:text-xl leading-relaxed max-w-3xl mx-auto mb-10 mobile-text-lg">
+        Tu plataforma de experiencias reales. Conectá con viajeros, encontrá rutas auténticas y planificá tu próxima aventura con información confiable.
       </p>
+      
+      <!-- Stats o indicadores -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-2xl mx-auto mt-12">
+        <div class="text-center p-4 bg-white rounded-xl shadow-sm hover-lift">
+          <div class="text-2xl md:text-3xl lg:text-4xl font-bold text-blue-600 mb-2">500+</div>
+          <div class="text-gray-600 text-sm">Historias</div>
+        </div>
+        <div class="text-center p-4 bg-white rounded-xl shadow-sm hover-lift">
+          <div class="text-2xl md:text-3xl lg:text-4xl font-bold text-green-600 mb-2">120+</div>
+          <div class="text-gray-600 text-sm">Destinos</div>
+        </div>
+        <div class="text-center p-4 bg-white rounded-xl shadow-sm hover-lift">
+          <div class="text-2xl md:text-3xl lg:text-4xl font-bold text-purple-600 mb-2">2K+</div>
+          <div class="text-gray-600 text-sm">Viajeros</div>
+        </div>
+        <div class="text-center p-4 bg-white rounded-xl shadow-sm hover-lift">
+          <div class="text-2xl md:text-3xl lg:text-4xl font-bold text-amber-600 mb-2">50+</div>
+          <div class="text-gray-600 text-sm">Rutas</div>
+        </div>
+      </div>
     </div>
   </div>
-  <!-- BLOQUE 2 -->
-  <div class="grid md:grid-cols-2 gap-10 items-center mb-16">
-    <div class="order-2 md:order-1">
-      <h3 class="text-2xl font-bold text-brand mb-3 text-blue-600">Guías y Consejos</h3>
-      <p class="text-gray-600 leading-relaxed">
-        Encontrá información clara y práctica sobre rutas, transportes, precios, mochilas, hospedajes económicos,
-        alimentación, seguridad y más. Todo basado en experiencias reales para que puedas viajar con tranquilidad,
-        ahorrar tiempo, evitar complicaciones y aprovechar cada destino al máximo.
+</section>
+
+<!-- Sección de características -->
+<section class="py-16 md:py-24 px-4 md:px-8 bg-white">
+  <div class="max-w-7xl mx-auto">
+    <!-- Título de sección -->
+    <div class="text-center mb-12 md:mb-20 js-scroll mobile-padding">
+      <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+        Todo lo que necesitás para tu aventura
+      </h2>
+      <p class="text-gray-600 max-w-2xl mx-auto mobile-text-lg">
+        Recursos creados por viajeros, para viajeros
       </p>
     </div>
-    <img src="{% static 'img/PuenteIncaMendozaIndex.jpg' %}" alt="Guías y consejos para viajar"
-      class="rounded-2xl shadow-lg w-full object-cover order-1 md:order-2" />
-  </div>
-  <!-- BLOQUE 3 -->
-  <div class="grid md:grid-cols-2 gap-10 items-center mb-16">
-    <img src="{% static 'img/Ruta7LagosNeuquenIndex.jpg' %}" alt="Comunidad de viajeros"
-      class="rounded-2xl shadow-lg w-full object-cover" />
-    <div>
-      <h3 class="text-2xl font-bold text-brand mb-3 text-blue-600">Comunidad Mochilera</h3>
-      <p class="text-gray-600 leading-relaxed">
-        Formá parte de una comunidad que comparte rutas, fotos, consejos, presupuestos reales, actividades recomendadas
-        y datos útiles que no siempre aparecen en internet. Preguntá, respondé, contá tu experiencia y ayudá a que más
-        personas vivan viajes inolvidables por Argentina.
-      </p>
+
+    <!-- BLOQUE 1 - Historias de Viaje -->
+    <div class="grid md:grid-cols-2 gap-8 md:gap-12 items-center mb-20 md:mb-24 js-scroll">
+      <div class="order-2 md:order-1 mobile-padding">
+        <div class="inline-flex items-center mb-4">
+          <div class="w-10 h-10 md:w-12 md:h-12 rounded-lg md:rounded-xl bg-blue-100 flex items-center justify-center mr-3 md:mr-4">
+            <span class="text-blue-600 text-lg md:text-xl font-bold">01</span>
+          </div>
+          <h3 class="text-2xl md:text-3xl font-bold text-gray-900">Historias de Viaje Reales</h3>
+        </div>
+        <p class="text-gray-600 text-lg leading-relaxed mb-6 mobile-text-lg">
+          Descubrí relatos auténticos de viajeros que recorrieron cada rincón de Argentina. Desde experiencias en hostels hasta encuentros inesperados, cada historia es una guía viva.
+        </p>
+        <ul class="space-y-3 mb-6 md:mb-8">
+          <li class="flex items-center">
+            <span class="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
+            <span class="text-gray-700">Relatos con fotos reales</span>
+          </li>
+          <li class="flex items-center">
+            <span class="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
+            <span class="text-gray-700">Presupuestos detallados</span>
+          </li>
+          <li class="flex items-center">
+            <span class="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
+            <span class="text-gray-700">Consejos prácticos</span>
+          </li>
+        </ul>
+        <a href="#" class="inline-flex items-center text-blue-600 font-semibold group mobile-touch-target">
+          <span class="mr-2">Ver todas las historias</span>
+          <span class="transform group-hover:translate-x-2 transition-transform duration-300">→</span>
+        </a>
+      </div>
+      <div class="order-1 md:order-2 relative overflow-hidden rounded-2xl md:rounded-3xl shadow-lg hover-lift">
+        <div class="aspect-[4/3] overflow-hidden">
+          <img 
+            src="{% static 'img/CafayateSaltaIndex.jpg' %}" 
+            alt="Viñedos y montañas de Cafayate, Salta - Paraíso para mochileros" 
+            class="w-full h-full object-cover transform hover:scale-110 transition-transform duration-700"
+            loading="lazy"
+          >
+        </div>
+        <div class="absolute top-4 left-4">
+          <span class="px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full text-sm font-medium text-gray-700">
+            Salta
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- BLOQUE 2 - Guías Prácticas -->
+    <div class="grid md:grid-cols-2 gap-8 md:gap-12 items-center mb-20 md:mb-24 js-scroll">
+      <div class="relative overflow-hidden rounded-2xl md:rounded-3xl shadow-lg hover-lift order-1 md:order-1">
+        <div class="aspect-[4/3] overflow-hidden">
+          <img 
+            src="{% static 'img/PuenteIncaMendozaIndex.jpg' %}" 
+            alt="Puente del Inca, Mendoza - Maravilla natural para aventureros" 
+            class="w-full h-full object-cover transform hover:scale-110 transition-transform duration-700"
+            loading="lazy"
+          >
+        </div>
+        <div class="absolute top-4 left-4">
+          <span class="px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full text-sm font-medium text-gray-700">
+            Mendoza
+          </span>
+        </div>
+      </div>
+      <div class="mobile-padding order-2 md:order-2">
+        <div class="inline-flex items-center mb-4">
+          <div class="w-10 h-10 md:w-12 md:h-12 rounded-lg md:rounded-xl bg-green-100 flex items-center justify-center mr-3 md:mr-4">
+            <span class="text-green-600 text-lg md:text-xl font-bold">02</span>
+          </div>
+          <h3 class="text-2xl md:text-3xl font-bold text-gray-900">Guías y Consejos Prácticos</h3>
+        </div>
+        <p class="text-gray-600 text-lg leading-relaxed mb-6 mobile-text-lg">
+          Información actualizada sobre transporte, alojamiento, comida y seguridad. Todo lo que necesitás saber para viajar tranquilo y aprovechar al máximo.
+        </p>
+        <div class="grid grid-cols-2 gap-3 md:gap-4 mb-6 md:mb-8">
+          <div class="bg-gray-50 rounded-lg p-3 md:p-4">
+            <div class="text-green-600 font-bold text-base md:text-lg mb-1">Transporte</div>
+            <div class="text-gray-600 text-xs md:text-sm">Colectivos, hitchhiking, bicicleta</div>
+          </div>
+          <div class="bg-gray-50 rounded-lg p-3 md:p-4">
+            <div class="text-green-600 font-bold text-base md:text-lg mb-1">Alojamiento</div>
+            <div class="text-gray-600 text-xs md:text-sm">Hostels, camping, couchsurfing</div>
+          </div>
+          <div class="bg-gray-50 rounded-lg p-3 md:p-4">
+            <div class="text-green-600 font-bold text-base md:text-lg mb-1">Presupuesto</div>
+            <div class="text-gray-600 text-xs md:text-sm">Costos reales y ahorros</div>
+          </div>
+          <div class="bg-gray-50 rounded-lg p-3 md:p-4">
+            <div class="text-green-600 font-bold text-base md:text-lg mb-1">Seguridad</div>
+            <div class="text-gray-600 text-xs md:text-sm">Consejos y precauciones</div>
+          </div>
+        </div>
+        <a href="#" class="inline-flex items-center text-green-600 font-semibold group mobile-touch-target">
+          <span class="mr-2">Explorar guías</span>
+          <span class="transform group-hover:translate-x-2 transition-transform duration-300">→</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- BLOQUE 3 - Comunidad -->
+    <div class="grid md:grid-cols-2 gap-8 md:gap-12 items-center mb-20 md:mb-24 js-scroll">
+      <div class="order-2 md:order-1 mobile-padding">
+        <div class="inline-flex items-center mb-4">
+          <div class="w-10 h-10 md:w-12 md:h-12 rounded-lg md:rounded-xl bg-purple-100 flex items-center justify-center mr-3 md:mr-4">
+            <span class="text-purple-600 text-lg md:text-xl font-bold">03</span>
+          </div>
+          <h3 class="text-2xl md:text-3xl font-bold text-gray-900">Comunidad Mochilera Activa</h3>
+        </div>
+        <p class="text-gray-600 text-lg leading-relaxed mb-6 mobile-text-lg">
+          Conectá con viajeros, compartí experiencias, encontrá compañeros de ruta y resolvé dudas en tiempo real. Una comunidad que realmente ayuda.
+        </p>
+        <div class="space-y-3 md:space-y-4 mb-6 md:mb-8">
+          <div class="flex items-center bg-gray-50 rounded-lg p-3 md:p-4">
+            <div class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-purple-100 flex items-center justify-center mr-3 md:mr-4">
+              <span class="text-purple-600 text-sm md:text-base">💬</span>
+            </div>
+            <div>
+              <div class="font-medium text-gray-900 text-base md:text-lg">Foros activos</div>
+              <div class="text-gray-600 text-xs md:text-sm">Preguntas y respuestas 24/7</div>
+            </div>
+          </div>
+          <div class="flex items-center bg-gray-50 rounded-lg p-3 md:p-4">
+            <div class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-purple-100 flex items-center justify-center mr-3 md:mr-4">
+              <span class="text-purple-600 text-sm md:text-base">👥</span>
+            </div>
+            <div>
+              <div class="font-medium text-gray-900 text-base md:text-lg">Encuentros</div>
+              <div class="text-gray-600 text-xs md:text-sm">Reuniones y viajes grupales</div>
+            </div>
+          </div>
+        </div>
+        <a href="#comunidad" class="inline-flex items-center text-purple-600 font-semibold group mobile-touch-target">
+          <span class="mr-2">Unirse a la comunidad</span>
+          <span class="transform group-hover:translate-x-2 transition-transform duration-300">→</span>
+        </a>
+      </div>
+      <div class="order-1 md:order-2 relative overflow-hidden rounded-2xl md:rounded-3xl shadow-lg hover-lift">
+        <div class="aspect-[4/3] overflow-hidden">
+          <img 
+            src="{% static 'img/Ruta7LagosNeuquenIndex.jpg' %}" 
+            alt="Ruta de los Siete Lagos, Neuquén - Comunidad de viajeros en la Patagonia" 
+            class="w-full h-full object-cover transform hover:scale-110 transition-transform duration-700"
+            loading="lazy"
+          >
+        </div>
+        <div class="absolute top-4 left-4">
+          <span class="px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full text-sm font-medium text-gray-700">
+            Neuquén
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- BLOQUE 4 - Destinos -->
+    <div class="grid md:grid-cols-2 gap-8 md:gap-12 items-center js-scroll">
+      <div class="relative overflow-hidden rounded-2xl md:rounded-3xl shadow-lg hover-lift order-1 md:order-1">
+        <div class="aspect-[4/3] overflow-hidden">
+          <img 
+            src="{% static 'img/SalinasGrandesSaltaIndex.jpg' %}" 
+            alt="Salinas Grandes, Salta - Destino único en el norte argentino" 
+            class="w-full h-full object-cover transform hover:scale-110 transition-transform duration-700"
+            loading="lazy"
+          >
+        </div>
+        <div class="absolute top-4 left-4">
+          <span class="px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full text-sm font-medium text-gray-700">
+            Salta
+          </span>
+        </div>
+      </div>
+      <div class="mobile-padding order-2 md:order-2">
+        <div class="inline-flex items-center mb-4">
+          <div class="w-10 h-10 md:w-12 md:h-12 rounded-lg md:rounded-xl bg-amber-100 flex items-center justify-center mr-3 md:mr-4">
+            <span class="text-amber-600 text-lg md:text-xl font-bold">04</span>
+          </div>
+          <h3 class="text-2xl md:text-3xl font-bold text-gray-900">Destinos por Provincias</h3>
+        </div>
+        <p class="text-gray-600 text-lg leading-relaxed mb-6 mobile-text-lg">
+          Explorá Argentina provincia por provincia. Información detallada de cada región, con mapas interactivos, clima, mejores épocas y secretos locales.
+        </p>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-3 mb-6 md:mb-8">
+          <span class="px-2 py-1.5 md:px-3 md:py-2 bg-blue-50 text-blue-700 rounded-lg text-center text-xs md:text-sm font-medium">Mendoza</span>
+          <span class="px-2 py-1.5 md:px-3 md:py-2 bg-green-50 text-green-700 rounded-lg text-center text-xs md:text-sm font-medium">Córdoba</span>
+          <span class="px-2 py-1.5 md:px-3 md:py-2 bg-purple-50 text-purple-700 rounded-lg text-center text-xs md:text-sm font-medium">Neuquén</span>
+          <span class="px-2 py-1.5 md:px-3 md:py-2 bg-amber-50 text-amber-700 rounded-lg text-center text-xs md:text-sm font-medium">Salta</span>
+          <span class="px-2 py-1.5 md:px-3 md:py-2 bg-red-50 text-red-700 rounded-lg text-center text-xs md:text-sm font-medium">Tierra del Fuego</span>
+          <span class="px-2 py-1.5 md:px-3 md:py-2 bg-indigo-50 text-indigo-700 rounded-lg text-center text-xs md:text-sm font-medium">Jujuy</span>
+          <span class="px-2 py-1.5 md:px-3 md:py-2 bg-teal-50 text-teal-700 rounded-lg text-center text-xs md:text-sm font-medium">Chubut</span>
+          <span class="px-2 py-1.5 md:px-3 md:py-2 bg-pink-50 text-pink-700 rounded-lg text-center text-xs md:text-sm font-medium">+10 más</span>
+        </div>
+        <a href="#" class="inline-flex items-center text-amber-600 font-semibold group mobile-touch-target">
+          <span class="mr-2">Ver todos los destinos</span>
+          <span class="transform group-hover:translate-x-2 transition-transform duration-300">→</span>
+        </a>
+      </div>
     </div>
   </div>
-  <!-- BLOQUE 4 -->
-  <div class="grid md:grid-cols-2 gap-10 items-center mb-16">
-    <div class="order-2 md:order-1">
-      <h3 class="text-2xl font-bold text-brand mb-3 text-blue-600">Destinos y Provincias</h3>
-      <p class="text-gray-600 leading-relaxed">
-        Explorá Mendoza, Córdoba, Neuquén y Salta desde la perspectiva de viajeros que recorrieron sus caminos. Descubrí
-        paisajes imperdibles, actividades recomendadas, rutas panorámicas, experiencias gastronómicas, lugares poco
-        conocidos y todo lo que necesitás saber antes de visitar cada provincia.
-      </p>
+</section>
+
+<!-- CTA Final -->
+<section id="comunidad" class="py-16 md:py-24 px-4 md:px-8 bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800 text-white">
+  <div class="max-w-4xl mx-auto text-center">
+    <div class="inline-flex items-center justify-center mb-6">
+      <div class="w-16 h-1 bg-white/50 rounded-full"></div>
     </div>
-    <img src="{% static 'img/SalinasGrandesSaltaIndex.jpg' %}" alt="Destinos de Argentina"
-      class="rounded-2xl shadow-lg w-full object-cover order-1 md:order-2" />
+    
+    <h2 class="text-3xl md:text-5xl font-bold mb-6 leading-tight">
+      ¿Listo para tu próxima <span class="text-blue-200">aventura</span>?
+    </h2>
+    
+    <p class="text-lg md:text-xl text-blue-100 mb-8 md:mb-10 max-w-2xl mx-auto leading-relaxed mobile-text-lg">
+      Unite a miles de viajeros que ya están explorando Argentina con información real y una comunidad que te acompaña.
+    </p>
+    
+    <div class="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center mb-12 md:mb-16">
+      <a href="#" class="px-6 md:px-8 py-3 md:py-4 bg-white text-blue-700 font-bold rounded-xl hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg text-base md:text-lg text-center mobile-touch-target">
+        Crear mi cuenta gratis
+      </a>
+      <a href="#" class="px-6 md:px-8 py-3 md:py-4 bg-transparent border-2 border-white/40 text-white font-bold rounded-xl hover:bg-white/10 hover:border-white transition-all duration-300 text-base md:text-lg text-center mobile-touch-target">
+        Explorar sin registrar
+      </a>
+    </div>
+    
+    <!-- Testimonios -->
+    <div class="max-w-2xl mx-auto">
+      <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-4 md:p-6 lg:p-8">
+        <div class="flex items-center justify-center mb-4">
+          <div class="flex -space-x-2 md:-space-x-3">
+            <div class="w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 rounded-full bg-blue-400 border-2 border-white"></div>
+            <div class="w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 rounded-full bg-green-400 border-2 border-white"></div>
+            <div class="w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 rounded-full bg-amber-400 border-2 border-white"></div>
+          </div>
+        </div>
+        <p class="text-white/90 italic mb-3 md:mb-4 text-sm md:text-base lg:text-lg">
+          "Gracias a Mochileando Argentina conocí rutas que no aparecen en las guías tradicionales. La comunidad es increíble."
+        </p>
+        <div class="text-white/70 font-medium text-sm md:text-base">- Ana, viajera de Córdoba</div>
+      </div>
+    </div>
   </div>
-</div>
+</section>
+
+<!-- Footer de la página -->
+<footer class="py-6 md:py-8 px-4 bg-gray-900 text-white/80">
+  <div class="max-w-6xl mx-auto text-center">
+    <p class="mb-3 md:mb-4 text-sm md:text-base">© 2024 Mochileando Argentina. Todos los derechos reservados.</p>
+    <p class="text-white/60 text-xs md:text-sm">
+      Hecho con ❤️ por viajeros para viajeros
+    </p>
+  </div>
+</footer>
 {% endblock content %}
+
+{% block extra_scripts %}
+<script>
+  // ANIMACIONES AL HACER SCROLL - CÓDIGO CORREGIDO Y OPTIMIZADO
+  document.addEventListener('DOMContentLoaded', function() {
+    // 1. Configuración inicial
+    const isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    
+    // 2. Detectar tipo de dispositivo
+    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    if (isTouchDevice) {
+      document.body.classList.add('touch-device');
+    } else {
+      document.body.classList.add('no-touch-device');
+    }
+    
+    // 3. Animaciones al scroll (solo si no hay reducción de movimiento)
+    if (!isReducedMotion) {
+      const scrollElements = document.querySelectorAll('.js-scroll');
+      
+      const checkScroll = () => {
+        scrollElements.forEach((element, index) => {
+          const elementTop = element.getBoundingClientRect().top;
+          const elementVisible = 150;
+          
+          if (elementTop < window.innerHeight - elementVisible) {
+            // Añadir delay escalonado
+            setTimeout(() => {
+              element.classList.add('scrolled');
+            }, index * 100);
+          }
+        });
+      };
+      
+      // Ejecutar al cargar
+      checkScroll();
+      
+      // Ejecutar al hacer scroll con throttling
+      let scrollTimeout;
+      window.addEventListener('scroll', () => {
+        if (!scrollTimeout) {
+          scrollTimeout = setTimeout(() => {
+            checkScroll();
+            scrollTimeout = null;
+          }, 50);
+        }
+      });
+    } else {
+      // Si hay reducción de movimiento, mostrar todo inmediatamente
+      document.querySelectorAll('.js-scroll').forEach(el => {
+        el.classList.add('scrolled');
+      });
+    }
+    
+    // 4. Smooth scroll para enlaces internos
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const targetId = this.getAttribute('href');
+        
+        if (targetId && targetId !== '#') {
+          const targetElement = document.querySelector(targetId);
+          
+          if (targetElement) {
+            e.preventDefault();
+            
+            // Calcular posición considerando header
+            const headerHeight = 80;
+            const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+            const offsetPosition = targetPosition - headerHeight;
+            
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: 'smooth'
+            });
+            
+            // Actualizar URL
+            if (history.pushState) {
+              history.pushState(null, null, targetId);
+            }
+          }
+        }
+      });
+    });
+    
+    // 5. Efecto parallax para el banner (solo en desktop y sin reducción de movimiento)
+    if (!isReducedMotion && window.innerWidth > 768) {
+      const banner = document.querySelector('section.bg-gray-900');
+      if (banner) {
+        const bannerImage = banner.querySelector('img');
+        
+        if (bannerImage) {
+          const updateParallax = () => {
+            const scrolled = window.pageYOffset;
+            const rate = scrolled * -0.3;
+            bannerImage.style.transform = `translateY(${rate}px) scale(1.05)`;
+          };
+          
+          // Solo activar parallax cuando el banner es visible
+          const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                window.addEventListener('scroll', updateParallax);
+              } else {
+                window.removeEventListener('scroll', updateParallax);
+                bannerImage.style.transform = 'none';
+              }
+            });
+          }, { threshold: 0.1 });
+          
+          observer.observe(banner);
+        }
+      }
+    }
+    
+    // 6. Detección de navegación por teclado para accesibilidad
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Tab') {
+        document.body.classList.add('keyboard-navigation');
+      }
+    });
+    
+    document.addEventListener('mousedown', function() {
+      document.body.classList.remove('keyboard-navigation');
+    });
+    
+    // 7. Precarga de imágenes críticas
+    const preloadCriticalImages = () => {
+      const criticalImages = document.querySelectorAll('img[loading="eager"], img[fetchpriority="high"]');
+      criticalImages.forEach(img => {
+        // Crear una imagen fantasma para forzar la carga
+        const tempImg = new Image();
+        tempImg.src = img.src;
+      });
+    };
+    
+    // Precargar después de que todo lo crítico se haya cargado
+    if (document.readyState === 'complete') {
+      setTimeout(preloadCriticalImages, 100);
+    } else {
+      window.addEventListener('load', () => {
+        setTimeout(preloadCriticalImages, 100);
+      });
+    }
+    
+    // 8. Lazy loading mejorado para imágenes
+    if ('IntersectionObserver' in window) {
+      const lazyImages = document.querySelectorAll('img[loading="lazy"]');
+      
+      const imageObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const img = entry.target;
+            
+            // Asegurar que la imagen se cargue
+            if (img.complete === false) {
+              img.src = img.src; // Forzar recarga si es necesario
+            }
+            
+            imageObserver.unobserve(img);
+          }
+        });
+      }, {
+        rootMargin: '50px 0px', // Cargar antes de que sean visibles
+        threshold: 0.01
+      });
+      
+      lazyImages.forEach(img => {
+        imageObserver.observe(img);
+      });
+    }
+    
+    // 9. Manejo de redimensionamiento de ventana
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        // Re-activar animaciones después del resize
+        if (!isReducedMotion) {
+          document.querySelectorAll('.js-scroll').forEach(el => {
+            const elementTop = el.getBoundingClientRect().top;
+            if (elementTop < window.innerHeight - 150) {
+              el.classList.add('scrolled');
+            }
+          });
+        }
+      }, 250);
+    });
+    
+    // 10. Mejorar performance en dispositivos móviles
+    if (isTouchDevice) {
+      // Desactivar hover effects problemáticos en móviles
+      const style = document.createElement('style');
+      style.textContent = `
+        @media (hover: hover) and (pointer: fine) {
+          .hover-lift:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+          }
+        }
+        
+        .touch-device .hover-lift {
+          transition: none;
+        }
+      `;
+      document.head.appendChild(style);
+    }
+  });
+  
+  // 11. Manejar carga de la página
+  window.addEventListener('load', function() {
+    // Añadir clase para indicar que la página está completamente cargada
+    document.body.classList.add('page-loaded');
+    
+    // Remover spinner de carga si existe
+    const loader = document.getElementById('page-loader');
+    if (loader) {
+      loader.style.display = 'none';
+    }
+  });
+</script>
+{% endblock extra_scripts %}

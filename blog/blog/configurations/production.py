@@ -1,7 +1,9 @@
 from .base import *
 
 # TODO: Dejar solo el dominio de prod
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'mi-dominio-prod-ejemplo.com']
+ALLOWED_HOSTS = [
+    'mochileandoargentina.pythonanywhere.com',
+]
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
